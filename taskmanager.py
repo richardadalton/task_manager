@@ -50,14 +50,14 @@ def edit_task(category, task_id):
     if request.method=="POST":
         form_values = request.form.to_dict()
         form_values["is_urgent"] = "is_urgent" in form_values
-        tt = mongo.db[category].update({"_id": ObjectId(task_id)}, form_values)
+        mongo.db[category].update({"_id": ObjectId(task_id)}, form_values)
         
         if form_values["category_name"] != category:
             the_task = mongo.db[category].find_one({"_id": ObjectId(task_id)})
             mongo.db[category].remove(the_task)
             mongo.db[form_values["category_name"]].insert(the_task)
             
-        return redirect(url_for("get_tasks_by_category", category=category))
+        return redirect(url_for("get_tasks_by_category", category=form_values["category_name"]))
     else:
         the_task =  mongo.db[category].find_one({"_id": ObjectId(task_id)})
         categories = get_category_names()
