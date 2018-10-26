@@ -63,5 +63,16 @@ def edit_task(category, task_id):
         categories = get_category_names()
         return render_template('edittask.html', task=the_task, categories=categories)
 
+
+@app.route('/tasks/<category>/<task_id>/delete', methods=["POST"])
+def delete_task(category, task_id):
+    the_task = mongo.db[category].find_one({"_id": ObjectId(task_id)})
+    mongo.db[category].remove(the_task)
+    return redirect(url_for("get_tasks_by_category", category=category))
+
+
+
+
+
 if __name__ == "__main__":
         app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
