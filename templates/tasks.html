@@ -8,9 +8,7 @@
                 <div class="col s3">
                     <i class="material-icons">expand_more</i>
                     
-                    <form action="{{url_for('delete_task', category=task.category_name, task_id=task._id)}}" method="POST">
-                        <input type="submit" value="Done">
-                    </form>
+                     <a href="#modal1" class="delete_task_btn waves-effect waves-light btn btn_small modal-trigger" data-taskid={{task._id}}>Done</a>
                      <a href="{{url_for('edit_task', category=task.category_name, task_id=task._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
                 </div>
                 <div class="task_header col s9">
@@ -25,4 +23,26 @@
     </li>
     {% endfor %}
 </ul>
+
+<!-- Modal Structure -->
+    <div id="modal1" class="modal center-align">
+        <div class="modal-content">
+            <h4>Are you sure?</h4>
+        </div>
+    
+        <div class="row modal-footer">
+            <form action="#" method="POST" class="col s6 center-align">
+                <input id="hidden-task-id" type="hidden" name="task_id">
+                <button class="testing btn waves-effect waves-light margin-left" type="submit" name="action">Yes
+                    <i class="material-icons right">thumb_up</i>
+                </button>
+            </form>
+    
+            <form action="{{ url_for('get_tasks') }}" method="GET" class="col s6 center-align">
+                <button class="btn waves-effect waves-light margin-left" type="submit" name="action">No
+                    <i class="material-icons right">thumb_down</i>
+                </button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

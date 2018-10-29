@@ -31,7 +31,6 @@ def get_tasks_by_category(category):
     return render_template("tasks.html", tasks=tasks)
 
 
-
 @app.route("/add_task", methods=["GET", "POST"])
 def add_task():
     if request.method=="POST":
@@ -72,6 +71,17 @@ def delete_task(category, task_id):
 
 
 
+
+@app.route('/categories')
+def get_categories():
+    categories = get_category_names()
+    return render_template("categories.html", categories=categories)
+
+@app.route('/categories/add', methods=["POST"])
+def add_category():
+    category_name = request.form["category_name"]
+    mongo.db.create_collection(category_name)
+    return redirect(url_for("get_categories"))
 
 
 if __name__ == "__main__":
