@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from base64 import b64encode
+import base64
 
 app = Flask(__name__)
 
@@ -35,7 +37,11 @@ def get_tasks_by_category(category):
 @app.route("/add_task", methods=["GET", "POST"])
 def add_task():
     if request.method=="POST":
+        image = request.files['image']  
+        image_string = base64.b64encode(image.read()).decode("utf-8")
+        
         form_values = request.form.to_dict()
+        form_values["image"] = "data:image/png;base64," + image_string
         form_values["is_urgent"] = "is_urgent" in form_values
         category = form_values["category_name"]
         mongo.db[category].insert_one(form_values)
@@ -64,13 +70,11 @@ def edit_task(category, task_id):
         return render_template('edittask.html', task=the_task, categories=categories)
 
 
-@app.route('/tasks/<category>/<task_id>/delete', methods=["POST"])
-def delete_task(category, task_id):
-    the_task = mongo.db[category].find_one({"_id": ObjectId(task_id)})
-    mongo.db[category].remove(the_task)
+@app.route("/tasks/<category>/delete", methods=["POST"])
+def delete_task(category):
+    task_id = request.form['task_id']
+    mongo.db[category].remove({"_id":ObjectId(task_id)})
     return redirect(url_for("get_tasks_by_category", category=category))
-
-
 
 
 @app.route('/categories')

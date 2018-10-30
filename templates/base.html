@@ -46,10 +46,11 @@
             close: 'Ok',
             closeOnSelect: false // Close upon selecting a date,
         });
+
         $(".delete_task_btn").click(function() {
             $('#hidden-task-id').attr('value', $(this).data("taskid"));
         });
-            
+
         $('.modal').modal();
     </script>
 </body>

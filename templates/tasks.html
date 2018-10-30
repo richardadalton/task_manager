@@ -8,7 +8,6 @@
 <a href="{{ url_for("get_tasks_by_category", category=category) }}" class="waves-effect waves-teal btn-flat">{{ category }}</a> |
 {% endfor %}
         
-        
 <ul class="collapsible" data-collapsible="accordion">
     {% for task in tasks %}
     <li>
@@ -24,6 +23,7 @@
                 </div>
             </div>
             <div class="collapsible-body">
+                <img src="{{task.image}}">
                 <span>
                 {{task.task_description}} 
             </span>
@@ -39,15 +39,14 @@
         </div>
     
         <div class="row modal-footer">
-            <form action="#" method="POST" class="col s6 center-align">
+        <form action="{{ url_for('delete_task', category=category) }}" method="POST" class="col s6 center-align">
                 <input id="hidden-task-id" type="hidden" name="task_id">
-                <button class="testing btn waves-effect waves-light margin-left" type="submit" name="action">Yes
+                <button class="testing btn waves-effect waves-light margin-left" type="submit">Yes
                     <i class="material-icons right">thumb_up</i>
                 </button>
-            </form>
-    
-            <form action="{{ url_for('get_tasks') }}" method="GET" class="col s6 center-align">
-                <button class="btn waves-effect waves-light margin-left" type="submit" name="action">No
+            </form>    
+            <form action="{{ url_for('get_tasks_by_category', category=category) }}" method="GET" class="col s6 center-align">
+                <button class="btn waves-effect waves-light margin-left" type="submit">No
                     <i class="material-icons right">thumb_down</i>
                 </button>
             </form>

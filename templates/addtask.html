@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <h3>Add Task</h3>
 <div class="row">
-    <form method="POST"  class="col s12">
+    <form method="POST" class="col s12" enctype='multipart/form-data'>
         <div class="row">
             <div class="row">
                 <div class="input-field col s12">
@@ -44,6 +44,19 @@
                 </label>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="file-field input-field">
+                <div class="btn">
+                <span>Image</span>
+                <input type="file" name="image">
+                </div>
+                <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <button class="btn waves-effect waves-light" type="submit">Add Task
                 <i class="material-icons right">playlist_add</i>
