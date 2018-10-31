@@ -20,7 +20,6 @@ def get_category_names():
             categories.append(category)
     return categories    
 
-
 @app.route("/")
 def get_tasks():
     categories = get_category_names()
@@ -41,8 +40,10 @@ def add_task():
         image_string = base64.b64encode(image.read()).decode("utf-8")
         
         form_values = request.form.to_dict()
+        
         form_values["image"] = "data:image/png;base64," + image_string
         form_values["is_urgent"] = "is_urgent" in form_values
+        form_values["colour"] = request.form.getlist("colour")
         category = form_values["category_name"]
         mongo.db[category].insert_one(form_values)
         return redirect("/")
@@ -56,6 +57,7 @@ def edit_task(category, task_id):
     if request.method=="POST":
         form_values = request.form.to_dict()
         form_values["is_urgent"] = "is_urgent" in form_values
+        form_values["colour"] = request.form.getlist('colour')
         mongo.db[category].update({"_id": ObjectId(task_id)}, form_values)
         
         if form_values["category_name"] != category:

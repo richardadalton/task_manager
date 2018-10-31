@@ -61,6 +61,28 @@
           </label>
       </div>
     </div>
+    
+    <div class="row">
+      <p>
+          <input id="id_colour_red" type="checkbox" name="colour" value="red"
+            {% if "red" in task.colour %}checked{% endif %}
+          />
+          <label for="id_colour_red">Red</label>
+      </p>
+      <p>
+          <input id="id_colour_yellow" type="checkbox" name="colour" value="yellow" 
+            {% if "yellow" in task.colour %}checked{% endif %}
+          />
+          <label for="id_colour_yellow">Yellow</label>
+      </p>
+      <p>
+          <input id="id_colour_green" type="checkbox" name="colour" value="green" 
+            {% if "green" in task.colour %}checked{% endif %}
+          />
+          <label for="id_colour_green">Green</label>
+      </p>
+    </div>
+
 
     <button class="btn waves-effect waves-light" type="submit">Save
       <i class="material-icons right">playlist_add</i>
